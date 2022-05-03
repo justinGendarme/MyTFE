@@ -6,6 +6,7 @@ public class Periodic_review {
 
     private int id_review;
     private int id_diabetic;
+    private int id_doctor;
     private Date date;
     private float weight;
     private float arterialPressure;

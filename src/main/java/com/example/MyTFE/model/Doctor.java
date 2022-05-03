@@ -3,7 +3,6 @@ package com.example.MyTFE.model;
 public class Doctor {
 
     private int id_doctor;
-    private int id_review;
     private String name;
     private String phone;
     private String mail;
@@ -21,13 +20,7 @@ public class Doctor {
         this.id_doctor = id_doctor;
     }
 
-    public int getId_review() {
-        return id_review;
-    }
 
-    public void setId_review(int id_review) {
-        this.id_review = id_review;
-    }
 
     public String getName() {
         return name;

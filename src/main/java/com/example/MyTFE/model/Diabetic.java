@@ -4,7 +4,6 @@ import java.sql.Date;
 
 public class Diabetic {
 
-
     private int id_diabetic;
     private int id_doctor;
     private String name;

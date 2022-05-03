@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 @Repository
 public class DiabeticDAO {
@@ -25,10 +26,26 @@ public class DiabeticDAO {
     }
 
     public Diabetic getDiabById(int id){
-        return jdbcTemplate.queryForObject("select * from Diabetic where id_diabetic=?", new Object[]{id}, new DiabeticRowMapper());
+        return jdbcTemplate.queryForObject("select * from Diabetic where id_diabetic=?", new DiabeticRowMapper(),id);
     }
 
+    public List<Diabetic> getAllDiab(){
+        return jdbcTemplate.query("select * from Diabetic",new DiabeticRowMapper());
 
+    }
+    public boolean loggin(String mail, String mdp)
+    {
+        DiabeticDAO diaDao = new DiabeticDAO();
+        List<Diabetic> listDia = diaDao.getAllDiab();
+        for (int i = 0; i < listDia.size(); i++)
+        {
+            if((listDia.get(i).getMail().equals(mail))&&(listDia.get(i).getPassword().equals(mdp)))
+            {
+                return true;
+            }
+        }
+        return  false;
+    }
 
     private final class DiabeticRowMapper implements RowMapper<Diabetic> {
         @Override
@@ -47,7 +64,4 @@ public class DiabeticDAO {
         }
 
     }
-
-
-
 }
