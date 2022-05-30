@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <div th:replace="header :: myheader"></div>
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <div class="row mt-5" >
+        <div class="col-sm-2" ></div>
+        <div class="col-sm-8" >
+            <form th:action="@{/inscription}"   method="post">
+                <label for="fname">First name:</label><br>
+                <input type="text" id="fname" name="firstname" value="John"><br>
+                <label for="lname">Last name:</label><br>
+                <input type="text" id="lname" name="name" value="Doe"><br>
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter email" name="mail">
+                <label for="pwd">Password:</label>
+                <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password">
+                <label for="pwd2">Password 2:</label>
+                <input type="password" class="form-control" id="pwd2" placeholder="Enter password again" name="pswd2"><br>
+                Doctor:
+                <select class="form-select" aria-label="Default select example" >
+                    <div th:each="doc: ${listDoc}">
+                    <option th:text="${doc.name}" value="${doc.id_doctor}"></option>
+                    </div>
+                    <option value=0>none</option>
+                </select><br>
+                <label for="bDate">Birthday</label>
+                <input id="bDate" class="form-control" type="date" name="birthdate" /><br>
+                <label for="phone">First name:</label><br>
+                <input type="text" id="phone" name="phone" value="+32 XXX XXX XXX"><br>
+                <label for="emergency">Last name:</label><br>
+                <input type="text" id="emergency" name="emergencyContact" value="+32 XXX XXX XXX"><br>
+                <br>
+                <label for="adress">Adress:</label>
+                <textarea class="form-control" rows="5" id="adress" name="address"></textarea>
+                <br>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <div th:each="is: ${inscriptCheck}">
+                <div th:text="${is.errorList}"></div>
+            </div>
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+</div>
+
+</body>
+</html>

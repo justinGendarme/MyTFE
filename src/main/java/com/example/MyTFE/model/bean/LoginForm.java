@@ -5,10 +5,7 @@ public class LoginForm {
     private String mail;
     private String mdp;
 
-    public LoginForm()
-    {
-        super();
-    }
+
     public String getMail() {
         return mail;
     }
@@ -23,5 +20,13 @@ public class LoginForm {
 
     public void setMdp(String mdp) {
         this.mdp = mdp;
+    }
+
+    @Override
+    public String toString() {
+        return "LoginForm{" +
+                "mail='" + mail + '\'' +
+                ", mdp='" + mdp + '\'' +
+                '}';
     }
 }

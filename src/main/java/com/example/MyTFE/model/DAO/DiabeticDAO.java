@@ -7,7 +7,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
-import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -15,28 +14,42 @@ import java.util.List;
 @Repository
 public class DiabeticDAO {
 
-    private JdbcTemplate jdbcTemplate;
-    private SimpleJdbcInsert simpleJdbcInsert;
-
     @Autowired
-    public void setDataSource(DataSource dataSource){
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
-        this.simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("diabetic")
-                .usingGeneratedKeyColumns("id_diabetic");
+    public JdbcTemplate jdbcTemplate;
+
+
+
+    public SimpleJdbcInsert simpleJdbcInsert;
+
+
+    public void delDiab(int idDiab)
+    {
+        String sql = "DELETE FROM Diabetic WHERE id_diabetic = ?";
+        jdbcTemplate.update(sql,idDiab);
     }
+
+    public void addDiab (Diabetic dia)
+    {
+        String sql="INSERT INTO Diabetic (id_doctor,name,firstname,birthdate,mail," +
+                        "password,phone,emergencyContact,address) " +
+                        "VALUES (?,?,?,?,?,?,?,?,?)";
+            jdbcTemplate.update(sql,
+                    dia.getId_doctor(),dia.getName(),dia.getFirstname(),dia.getBirthdate(),dia.getMail(),dia.getPassword(),
+                    dia.getPhone(),dia.getEmergencyContact(),dia.getAddress());
+    }
+
 
     public Diabetic getDiabById(int id){
         return jdbcTemplate.queryForObject("select * from Diabetic where id_diabetic=?", new DiabeticRowMapper(),id);
     }
 
     public List<Diabetic> getAllDiab(){
-        return jdbcTemplate.query("select * from Diabetic",new DiabeticRowMapper());
+        return jdbcTemplate.query("SELECT * FROM Diabetic",new DiabeticRowMapper());
 
     }
     public boolean loggin(String mail, String mdp)
     {
-        DiabeticDAO diaDao = new DiabeticDAO();
-        List<Diabetic> listDia = diaDao.getAllDiab();
+        List<Diabetic> listDia = this.getAllDiab();
         for (int i = 0; i < listDia.size(); i++)
         {
             if((listDia.get(i).getMail().equals(mail))&&(listDia.get(i).getPassword().equals(mdp)))
@@ -52,6 +65,7 @@ public class DiabeticDAO {
         public Diabetic mapRow(ResultSet rs, int rowNum) throws SQLException{
             Diabetic diabetic = new Diabetic();
             diabetic.setId_diabetic(rs.getInt("id_diabetic"));
+            diabetic.setId_doctor(rs.getInt("id_doctor"));
             diabetic.setName(rs.getString("name"));
             diabetic.setFirstname(rs.getString("firstname"));
             diabetic.setBirthdate(rs.getDate("birthdate"));

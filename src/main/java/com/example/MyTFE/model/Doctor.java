@@ -12,6 +12,15 @@ public class Doctor {
     public Doctor() {
     }
 
+    public Doctor(int id_doctor, String name, String phone, String mail, String address, String description) {
+        this.id_doctor = id_doctor;
+        this.name = name;
+        this.phone = phone;
+        this.mail = mail;
+        this.address = address;
+        this.description = description;
+    }
+
     public int getId_doctor() {
         return id_doctor;
     }
@@ -19,7 +28,6 @@ public class Doctor {
     public void setId_doctor(int id_doctor) {
         this.id_doctor = id_doctor;
     }
-
 
 
     public String getName() {

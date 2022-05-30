@@ -2,6 +2,7 @@ package com.example.MyTFE.model;
 
 import java.sql.Date;
 
+
 public class Diabetic {
 
     private int id_diabetic;
@@ -110,5 +111,21 @@ public class Diabetic {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        return "Diabetic{" +
+                "id_diabetic=" + id_diabetic +
+                ", id_doctor=" + id_doctor +
+                ", name='" + name + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", birthdate=" + birthdate +
+                ", mail='" + mail + '\'' +
+                ", password='" + password + '\'' +
+                ", phone='" + phone + '\'' +
+                ", emergencyContact='" + emergencyContact + '\'' +
+                ", address='" + address + '\'' +
+                '}';
     }
 }

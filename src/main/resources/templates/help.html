@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <div th:replace="header :: myheader"></div>
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <div th:each="hlp: ${listHelp}">
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-8" th:text="${hlp.question}"></div><!--Questions-->
+            <div class="col-sm-2"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-7" th:text="${hlp.reply}"></div><!--Reply-->
+            <div class="col-sm-2"></div>
+        </div>
+    </div>
+</div>
+<!---
+<p>test</p>
+<tr th:each="hlp: ${listHelp}">
+    <td th:text="${hlp.question}">1</td>
+
+    <td th:text="${hlp.reply}">Firstname</td>
+</tr>
+
+<tr th:each="dia: ${listdia}">
+    <td th:text="${dia.id_diabetic}">1</td>
+    <td><a href="#" th:text="${dia.name}">Name</a></td>
+    <td th:text="${dia.firstname}">Firstname</td>
+</tr>--->
+</body>
+</html>
