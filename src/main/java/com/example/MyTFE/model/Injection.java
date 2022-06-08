@@ -24,7 +24,9 @@ public class Injection {
 
     public Injection()
     {}
-    public Injection(int id_injection, int id_diabetic, Date date, String day, int wakeupTest, String morningDose, int morningTest, int middayTest, String middayDose, int afternoonTest, int supperTest, String supperDose, int eveningTest, int sleepTest, String sleepDose, int nightTest, String comment) {
+    public Injection(int id_injection, int id_diabetic, Date date, String day, int wakeupTest, String morningDose,
+                     int morningTest, int middayTest, String middayDose, int afternoonTest, int supperTest, String supperDose,
+                     int eveningTest, int sleepTest, String sleepDose, int nightTest, String comment) {
         this.id_injection = id_injection;
         this.id_diabetic = id_diabetic;
         this.date = date;
@@ -178,5 +180,28 @@ public class Injection {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    @Override
+    public String toString() {
+        return "Injection{" +
+                "id_injection=" + id_injection +
+                ", id_diabetic=" + id_diabetic +
+                ", date=" + date +
+                ", day='" + day + '\'' +
+                ", wakeupTest=" + wakeupTest +
+                ", morningDose='" + morningDose + '\'' +
+                ", morningTest=" + morningTest +
+                ", middayTest=" + middayTest +
+                ", middayDose='" + middayDose + '\'' +
+                ", afternoonTest=" + afternoonTest +
+                ", supperTest=" + supperTest +
+                ", supperDose='" + supperDose + '\'' +
+                ", eveningTest=" + eveningTest +
+                ", sleepTest=" + sleepTest +
+                ", sleepDose='" + sleepDose + '\'' +
+                ", nightTest=" + nightTest +
+                ", comment='" + comment + '\'' +
+                '}';
     }
 }

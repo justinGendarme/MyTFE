@@ -6,10 +6,10 @@
 </head>
 <body>
 <div class="container d-flex flex-column min-vh-100 justify-content-center align-items-center">
-<form th:action="@{/authentification}"  method="post">
+<form name="f" th:action="@{/login}"  method="post">
     <div class="mb-3 mt-3">
         <label for="email" class="form-label">Email:</label>
-        <input type="email" class="form-control" id="email" placeholder="Enter email" name="mail" autofocus="autofocus">
+        <input type="text" class="form-control" id="email" placeholder="Enter email" name="mail" autofocus="autofocus">
     </div>
     <div class="mb-3">
         <label for="mdp" class="form-label">Password:</label>
@@ -17,6 +17,12 @@
     </div>
 
     <button type="submit" value = "Log In" class="btn btn-primary">Submit</button>
+    <div th:if="${param.error}" class="alert alert-error">
+        Invalid username and password.
+    </div>
+    <div th:if="${param.logout}" class="alert alert-success">
+        you have been logged out.
+    </div>
 </form>
 </div>
 </body>

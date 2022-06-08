@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <div th:replace="header :: myheader"></div>
+    <title>My Injections</title>
+</head>
+<body>
+<div class="container d-flex flex-column min-vh-100 justify-content-center align-items-center">
+    <div class="row mt-5 mb-3" >
+        <h3>My injections</h3>
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Day</th>
+                    <th>Wake up Test</th>
+                    <th>Morning Dose</th>
+                    <th>Morning Test</th>
+                    <th>Midday Test</th>
+                    <th>Midday Dose</th>
+                    <th>Afternoon Test</th>
+                    <th>Supper Test</th>
+                    <th>Supper Dose</th>
+                    <th>Evening Test</th>
+                    <th>Sleep Test</th>
+                    <th>Sleep Dose</th>
+                    <th>Night Test</th>
+                    <th>Further Information</th>
+                    <th>Delete </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="Inj: ${myInj}">
+                    <td th:text="${Inj.date}">  </td>
+                    <td th:text="${Inj.day}"></td>
+                    <td th:text="${Inj.wakeupTest}"></td>
+                    <td th:text="${Inj.morningDose}"></td>
+                    <td th:text="${Inj.morningTest}"></td>
+                    <td th:text="${Inj.middayTest}"></td>
+                    <td th:text="${Inj.middayDose}"></td>
+                    <td th:text="${Inj.afternoonTest}"></td>
+                    <td th:text="${Inj.supperTest}"></td>
+                    <td th:text="${Inj.supperDose}"></td>
+                    <td th:text="${Inj.eveningTest}"></td>
+                    <td th:text="${Inj.sleepTest}"></td>
+                    <td th:text="${Inj.sleepDose}"></td>
+                    <td th:text="${Inj.nightTest}"></td>
+                    <td th:text="${Inj.comment}"></td>
+
+                        <form th:action="@{/delInj}"   method="post">
+                            <td name="id_injection" value="${Inj.id_injection}"></td>
+                            <input type="submit" value="Submit">
+                        </form>
+
+
+                </tr>
+                </tbody>
+            </table>
+
+    </div>
+
+</div>
+</body>
+</html>

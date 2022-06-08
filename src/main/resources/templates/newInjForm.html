@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <div th:replace="header :: myheader"></div>
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <div class="row mt-5" >
+        <div class="col-sm-2" ></div>
+        <div class="col-sm-8" >
+            <form th:action="@{/addInjection}"   method="post">
+                <label for="injDate">Date of day</label>
+                <input id="injDate" class="form-control" type="date" name="date" /><br>
+                <label for="day-select">Choose a day:</label>
+                <select name="day" id="day-select">
+                    <option value="monday">Monday</option>
+                    <option value="tuesday">Tuesday</option>
+                    <option value="wednesday">Wednesday</option>
+                    <option value="thursday">Thursday</option>
+                    <option value="friday">Friday</option>
+                    <option value="saturday">Saturday</option>
+                    <option value="sunday">Sunday</option>
+                </select>
+                <br>
+
+                <label for="test-select">Choose time of test:</label>
+                <select name="testTime" id="test-select">
+                    <option value="wakeUp">Wake Up</option>
+                    <option value="morning">Morning</option>
+                    <option value="midday">Midday</option>
+                    <option value="afternoon">Afternoon</option>
+                    <option value="supper">Supper</option>
+                    <option value="sleep">Sleep</option>
+                    <option value="night">Night</option>
+                </select>
+                <label for="quantityTest">Quantity (between 1 and 5):</label>
+                <input type="number" id="quantityTest" name="testVal" min="1" max="5"><br>
+
+                <label for="test-select">Choose time of dose checking:</label>
+                <select name="doseTime" id="dose-select">
+                    <option value="morning">Morning</option>
+                    <option value="midday">Midday</option>
+                    <option value="supper">Supper</option>
+                    <option value="sleep">Sleep</option>
+                </select>
+                <label for="quantityDose">Quantity (between 1 and 5):</label>
+                <input type="number" id="quantityDose" name="doseVal" min="1" max="5"><br>
+
+                <label for="description">Further information:</label>
+                <textarea class="form-control" rows="5" id="description" name="comment"></textarea>
+                <br>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <tr th:each="er: ${er}">
+                <td th:text="${er}"></td>
+                </br>
+            </tr>
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+</div>
+
+</body>
+</html>

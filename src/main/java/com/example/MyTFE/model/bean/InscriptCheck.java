@@ -150,8 +150,8 @@ public class InscriptCheck {
                 ", errorList=" + errorList +
                 '}';
     }
-/*
-    public List checkAll()
+
+    public void checkAll()
     {
         if(!this.password.equals(this.password2))
         {
@@ -166,7 +166,7 @@ public class InscriptCheck {
         if(total<passwordLength)
         {
             this.errorList.add("The Password's Length has to be of 8 characters or more.");
-            return this.errorList;
+
         }
         else
         {
@@ -184,7 +184,6 @@ public class InscriptCheck {
                     if(ch=='<' || ch=='>')
                     {
                         this.errorList.add("The Password is Malicious!");
-                        return this.errorList;
                     }
                     else
                         special++;
@@ -227,6 +226,6 @@ public class InscriptCheck {
                 this.errorList.add("The Password must contain at least one special character.");
             }
         }
-        return this.errorList;
-    }*/
+
+    }
 }

@@ -18,13 +18,6 @@ public class MyTfeApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		String sql = "INSERT INTO Diabetic (id_doctor,name,firstname,birthdate,mail,password,phone,emergencyContact,address) VALUES (?,?,?,?,?,?,?,?,?)";
-		//int result=jdbcTemplate.update(sql,"8","nameTest","firstnTest","10/02/1988","test@gamail.com","mdp123","0476276735","027331528","205 avenue des test");
-		/*if(result>0){
-			System.out.println(" new diabetic add to db");
-		}
-		else {
 
-		}*/
 	}
 }

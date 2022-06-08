@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <div th:replace="header :: myheader"></div>
+    <title>My doctor</title>
+</head>
+<body>
+<div class="container d-flex flex-column min-vh-100 justify-content-center align-items-center">
+    <div class="row mt-5 mb-3" >
+        <div class="col-sm-2" ></div>
+        <div class="col-sm-8" >
+            My Doctor:
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+
+
+    <div th:each="doc: ${myDoc}" class="row mt-2">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+
+            Name:<div th:text="${doc.name}" ></div>
+            </br>
+            Phone number:<div th:text="${doc.phone}" ></div>
+            </br>
+            E-mail:<div th:text="${doc.mail}" ></div>
+            </br>
+            Address:<div th:text="${doc.address}" ></div>
+            </br>
+            Description:<div th:text="${doc.description}" ></div>
+            </br>
+
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+
+</div>
+</body>
+</html>

@@ -20,7 +20,9 @@ public class DoctorDAO {
         return jdbcTemplate.query("SELECT * FROM Doctor",new DoctorDAO.DoctorRowMapper());
     }
 
-
+    public Doctor getDoctorById(int id){
+        return jdbcTemplate.queryForObject("SELECT * FROM Doctor WHERE id_doctor=?", new DoctorDAO.DoctorRowMapper(),id);
+    }
 
     private final class DoctorRowMapper implements RowMapper<Doctor> {
         @Override

@@ -19,7 +19,7 @@
                 <label for="pwd">Password:</label>
                 <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password">
                 <label for="pwd2">Password 2:</label>
-                <input type="password" class="form-control" id="pwd2" placeholder="Enter password again" name="pswd2"><br>
+                <input type="password" class="form-control" id="pwd2" placeholder="Enter password again" name="password2"><br>
                 Doctor:
                 <select class="form-select" aria-label="Default select example" >
                     <div th:each="doc: ${listDoc}">
@@ -29,9 +29,9 @@
                 </select><br>
                 <label for="bDate">Birthday</label>
                 <input id="bDate" class="form-control" type="date" name="birthdate" /><br>
-                <label for="phone">First name:</label><br>
+                <label for="phone">Phone:</label><br>
                 <input type="text" id="phone" name="phone" value="+32 XXX XXX XXX"><br>
-                <label for="emergency">Last name:</label><br>
+                <label for="emergency">Emergency contact phone:</label><br>
                 <input type="text" id="emergency" name="emergencyContact" value="+32 XXX XXX XXX"><br>
                 <br>
                 <label for="adress">Adress:</label>
@@ -45,9 +45,10 @@
     <div class="row mt-2">
         <div class="col-sm-2"></div>
         <div class="col-sm-8">
-            <div th:each="is: ${inscriptCheck}">
-                <div th:text="${is.errorList}"></div>
-            </div>
+            <tr th:each="er: ${er}">
+                <td th:text="${er}"></td>
+                </br>
+            </tr>
         </div>
         <div class="col-sm-2"></div>
     </div>
