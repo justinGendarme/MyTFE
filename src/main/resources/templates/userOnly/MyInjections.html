@@ -49,12 +49,11 @@
                     <td th:text="${Inj.sleepDose}"></td>
                     <td th:text="${Inj.nightTest}"></td>
                     <td th:text="${Inj.comment}"></td>
-
-                        <form th:action="@{/delInj}"   method="post">
-                            <td name="id_injection" value="${Inj.id_injection}"></td>
-                            <input type="submit" value="Submit">
+                    <td>
+                        <form th:action="@{/delInj}" method="post">
+                            <input class="btn btn-danger" type="submit" value="Delete">
                         </form>
-
+                    </td>
 
                 </tr>
                 </tbody>

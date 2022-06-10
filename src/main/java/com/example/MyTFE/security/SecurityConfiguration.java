@@ -23,7 +23,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception{
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
-                .usersByUsernameQuery("select mail, password from Diabetic where mail = ?");
+                .usersByUsernameQuery("select mail, password, 'true' as enabled from Diabetic where mail = ?")
+                .authoritiesByUsernameQuery("select mail, authority from authorities where mail = ?");
     }
 
     @Override
@@ -39,5 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public PasswordEncoder getPasswordEncoder(){
         return NoOpPasswordEncoder.getInstance();
     }
+
+
 }
 

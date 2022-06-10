@@ -43,6 +43,10 @@ public class DiabeticDAO {
         return jdbcTemplate.queryForObject("select * from Diabetic where id_diabetic=?", new DiabeticRowMapper(),id);
     }
 
+    public Diabetic getDiaByMail(String ml){
+        return jdbcTemplate.queryForObject("select * from Diabetic where mail=?", new DiabeticRowMapper(),ml);
+    }
+
     public List<Diabetic> getAllDiab(){
         return jdbcTemplate.query("SELECT * FROM Diabetic",new DiabeticRowMapper());
 

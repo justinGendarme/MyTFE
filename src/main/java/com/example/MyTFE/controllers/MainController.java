@@ -12,6 +12,8 @@ import com.example.MyTFE.model.bean.InjForm;
 import com.example.MyTFE.model.bean.InscriptCheck;
 import com.example.MyTFE.model.bean.LoginForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +28,7 @@ import java.util.List;
 @Controller
 public class MainController {
 
+
     @Autowired
     DiabeticDAO diaDao;
 
@@ -38,45 +41,61 @@ public class MainController {
     @Autowired
     InjectionDAO injDAO;
 
-/*
-@GetMapping("/help")
-    public String helpPage(Model model){
-        List<Help> listHelp = helpDAO.getAllHelp();
-        model.addAttribute("listHelp",listHelp);
-        return "help";
-    }
- */
 
+    public int getUserId(){
+        int id=0;
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            String username = ((UserDetails)principal).getUsername();
+            Diabetic diabetic=diaDao.getDiaByMail(username);
+            id=diabetic.getId_diabetic();
+            return id;
+        } else {
+            String username = principal.toString();
+            Diabetic diabetic=diaDao.getDiaByMail(username);
+            id=diabetic.getId_diabetic();
+            return id;
+        }
+    }
    @GetMapping("/")
     public String firstPage(){
         return "firstPage";
     }
+
+
+    @RequestMapping(value = "/userOnly/menu", method = RequestMethod.GET)
+    public String menu() {
+        return "userOnly/menu";
+    }
+    @RequestMapping(value = "/userOnly/newDocForm", method = RequestMethod.GET)
+    public String newDocForm() {
+        return "userOnly/newDocForm";
+    }
+    @RequestMapping(value = "/userOnly/navbar", method = RequestMethod.GET)
+    public String navbar() {
+        return "userOnly/navbar";
+    }
+
 
     @GetMapping("/newInjForm")
     public String newInjForm(){
        return "newInjForm";
     }
 
-    @GetMapping("/newDocForm")
-    public String newDocForm(){
-        return "newDocForm";
-    }
-
-
-    @RequestMapping("/MyInjections")
+    @RequestMapping("/userOnly/MyInjections")
     public String MyInjections(Model model){
-        List <Injection> myInj = injDAO.getAllInjFromIdDia(1);//MOD:
-        System.out.println("TEST DEUx");
-        System.out.println(myInj.toString());
-
+        int id=this.getUserId();
+        List <Injection> myInj = injDAO.getAllInjFromIdDia(id);
         model.addAttribute("myInj",myInj);
-       return "myInjections";
+       return "userOnly/MyInjections";
     }
 
     @GetMapping("/myDoctorProfil")
     public String myDoctorProfil(Model model)
     {
-        Doctor myDoc = docDAO.getDoctorById(1);//MOD:Ajouter id utilisateur courant
+        int id=this.getUserId();
+        Doctor myDoc = docDAO.getDoctorById(id);
         model.addAttribute("myDoc",myDoc);
         return "myDoctorProfil";
     }
@@ -113,12 +132,10 @@ public class MainController {
         return "help";
     }
 
-
-
     @RequestMapping(value="/delInj", method= RequestMethod.POST)
     public ModelAndView delinject(Injection injection){
         ModelAndView mv = new ModelAndView(home());
-        mv.setViewName("MyInjections");
+        mv.setViewName("userOnly/MyInjections");
 
         return mv;
 
@@ -143,7 +160,8 @@ public class MainController {
         injection.setDate(injForm.getDate());
         injection.setDay(injForm.getDay());
         injection.setComment(injForm.getComment());
-        injection.setId_diabetic(1);//MOD:
+        int id=this.getUserId();
+        injection.setId_diabetic(id);//MOD:
 
 
         //Test
@@ -187,7 +205,7 @@ public class MainController {
         {
             System.out.println("Injection exist");
             injDAO.editInj(injection,1);
-            mv.setViewName("MyInjections");
+            mv.setViewName("userOnly/MyInjections");
             return mv;
 
         }
@@ -195,7 +213,7 @@ public class MainController {
         {
             System.out.println("Injection exist pas");
             injDAO.addInj(injection);
-            mv.setViewName("MyInjections");
+            mv.setViewName("userOnly/MyInjections");
             return mv;
         }
 
