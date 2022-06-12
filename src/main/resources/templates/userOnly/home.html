@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+
+    <div th:replace="header :: myheader"></div>
+
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="userOnly/navbar :: nav"></div>
+
+<div class="row mt-5"></div>
+    <div th:each="rm: ${lrm}">
+    <div class="row mt-5" >
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6 ">
+            <div th:classappend="${rm.date > td ? 'card text-white bg-primary' : 'card text-white bg-danger'}" >
+                <div class="card-header">Date: <div th:text="${rm.date}"></div></div>
+                <div class="card-body">Description: <div th:text="${rm.description}"></div></div>
+            </div>
+
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
+    </div>
+
+</body>
+</html>

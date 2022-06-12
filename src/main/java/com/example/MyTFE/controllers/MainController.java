@@ -1,16 +1,12 @@
 package com.example.MyTFE.controllers;
 
-import com.example.MyTFE.model.DAO.DiabeticDAO;
-import com.example.MyTFE.model.DAO.DoctorDAO;
-import com.example.MyTFE.model.DAO.HelpDAO;
-import com.example.MyTFE.model.DAO.InjectionDAO;
+import com.example.MyTFE.model.DAO.*;
 import com.example.MyTFE.model.Diabetic;
 import com.example.MyTFE.model.Doctor;
 import com.example.MyTFE.model.Help;
 import com.example.MyTFE.model.Injection;
 import com.example.MyTFE.model.bean.InjForm;
 import com.example.MyTFE.model.bean.InscriptCheck;
-import com.example.MyTFE.model.bean.LoginForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -40,6 +38,9 @@ public class MainController {
 
     @Autowired
     InjectionDAO injDAO;
+
+    @Autowired
+    ReminderDAO remDAO;
 
 
     public int getUserId(){
@@ -65,7 +66,7 @@ public class MainController {
 
     @RequestMapping(value = "/userOnly/profil", method = RequestMethod.GET)
     public String profil() {
-        return "/userOnly/profil";
+        return "userOnly/profil";
     }
 
     @RequestMapping(value = "/userOnly/menu", method = RequestMethod.GET)
@@ -89,12 +90,12 @@ public class MainController {
 
 
 
-    @GetMapping("/newInjForm")
+    @GetMapping("/userOnly/newInjForm")
     public String newInjForm(){
-       return "newInjForm";
+       return "userOnly/newInjForm";
     }
 
-    @RequestMapping("/userOnly/MyInjections")
+    @GetMapping("/userOnly/MyInjections")
     public String MyInjections(Model model){
         int id=this.getUserId();
         List <Injection> myInj = injDAO.getAllInjFromIdDia(id);
@@ -108,23 +109,33 @@ public class MainController {
         int id=this.getUserId();
         Doctor myDoc = docDAO.getDoctorById(id);
         model.addAttribute("myDoc",myDoc);
-        return "/userOnly/myDoctorProfil";
-    }
-    @GetMapping("/newDiab")
-    public String inscriptionForm(Model model){
-        List<Doctor> listDoc = docDAO.getAllDoct();
-        model.addAttribute("listDoc",listDoc);
-        return "inscriptionForm";
+        return "userOnly/myDoctorProfil";
     }
 
-    @GetMapping("/home")
-    public String home(){
-        return "home";
+    @GetMapping("/userOnly/home")
+    public String home(Model model)
+    {
+        int id=this.getUserId();
+        List lstRem=remDAO.getAllReminderFromUser(id);
+        model.addAttribute("lrm",lstRem);
+
+        //datej = 7 day before
+        ZoneId defaultZoneId = ZoneId.systemDefault();
+        LocalDate localDate = LocalDate.now().minusDays(7);
+        java.util.Date datej = Date.from(localDate.atStartOfDay(defaultZoneId).toInstant());
+
+
+        model.addAttribute("td",datej);
+        return "userOnly/home";
     }
-
-
     @GetMapping("/inscriptionForm")
-    public String inscriptionForm() { return "inscriptionForm"; }
+    public ModelAndView inscriptionForm(){
+        List<Doctor> listDoc = docDAO.getAllDoct();
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("listDoc",listDoc);
+        return mv;
+    }
+
 
 
     @GetMapping("/help")
@@ -136,28 +147,16 @@ public class MainController {
 
     @RequestMapping(value="/delInj", method= RequestMethod.POST)
     public ModelAndView delinject(Injection injection){
-        ModelAndView mv = new ModelAndView(home());
+        ModelAndView mv = new ModelAndView();
         mv.setViewName("userOnly/MyInjections");
 
         return mv;
 
     }
 
-    @RequestMapping(value="/authentification", method= RequestMethod.POST)
-    public ModelAndView logData(LoginForm lgf){
-        ModelAndView mv = new ModelAndView(home());
-        if(!diaDao.loggin(lgf.getMail(), lgf.getMdp()))
-        {
-            //mv.setViewName(loginPage());
-
-
-        }
-            return mv;
-
-    }
     @RequestMapping(value="/addInjection", method= RequestMethod.POST)
     public ModelAndView addInj(InjForm injForm){
-        ModelAndView mv = new ModelAndView(home());
+        ModelAndView mv = new ModelAndView();
         Injection injection = new Injection();
         injection.setDate(injForm.getDate());
         injection.setDay(injForm.getDay());
@@ -222,12 +221,42 @@ public class MainController {
     }
 
 
+
     @RequestMapping(value="/inscription", method= RequestMethod.POST)
     public ModelAndView ins(InscriptCheck inscriptCheck) {
         System.out.println("TTEESSTT");//ok
         System.out.println(inscriptCheck.toString());//ok
-        ModelAndView mv = new ModelAndView(home());
+        ModelAndView mv = new ModelAndView();
         List lst = new LinkedList();
+        Diabetic newDia = new Diabetic();
+        //TEST Password SECURITY
+        int passLenght=8,upChars=0,lowChars=0;
+        int special=0,digits=0;
+        char ch;
+        String psw=inscriptCheck.getPassword();
+        int total=psw.length();
+        if(total<passLenght)
+        {
+            lst.add("Password lenght must be beetween 8 and 16");
+        }
+        else
+        {
+            for(int i=0; i<total; i++)
+            {
+                ch= psw.charAt(i);
+                if(Character.isUpperCase(ch))
+                    upChars=1;
+                else if(Character.isLowerCase(ch))
+                    lowChars = 1;
+                else if(Character.isDigit(ch))
+                    digits = 1;
+                else
+                    special=1;
+            }
+        }
+        if(upChars != 1 && lowChars != 1 && digits!=1 && special!=1)
+            lst.add("This password isn't strong enough");
+
         if(inscriptCheck.getPassword().equals(inscriptCheck.getPassword2()))
         {
             if((inscriptCheck.getFirstname()).equals(""))
@@ -241,7 +270,7 @@ public class MainController {
 
             if(inscriptCheck.getMail().equals(""))
             {
-                lst.add("mail adresse is missing");
+                lst.add("mail address is missing");
             }
 
             if(inscriptCheck.getPassword().equals("")) {
@@ -259,7 +288,7 @@ public class MainController {
             }
             if(inscriptCheck.getPhone().equals(""))
             {
-                lst.add("phone numer is missing");
+                lst.add("phone number is missing");
             }
             if(inscriptCheck.getEmergencyContact().equals(""))
             {
@@ -267,7 +296,7 @@ public class MainController {
             }
             if(inscriptCheck.getAddress().equals(""))
             {
-                lst.add("adresse is mising"+ "\n");
+                lst.add("address is missing"+ "\n");
             }
         }
         else{
@@ -277,13 +306,12 @@ public class MainController {
 
         if(!lst.isEmpty())
         {
-            mv.setViewName(inscriptionForm());
+            mv.setViewName("inscriptionForm");
+            mv.addObject("er",lst);
+            return mv;
         }
 
-        Diabetic newDia = new Diabetic();
-        //ModelAndView mv = new ModelAndView(home());
-        //mv.addObject("insCk",inscriptCheck);
-        mv.addObject("er",lst);
+        mv.setViewName(menu());
         return mv;
     }
 

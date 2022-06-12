@@ -13,7 +13,7 @@
     <div class="row mt-5">
         <div class-sm-2></div>
         <div class-sm-8>
-            <form>
+            <form th:action="@{/addRem}"   method="post">
                 <label for="injDate">Date:</label>
                 <input id="injDate" class="form-control" type="date" name="date" /><br>
                 Doctor (if concerned):

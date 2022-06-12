@@ -1,7 +1,6 @@
 package com.example.MyTFE.model.bean;
 
 import java.sql.Date;
-import java.util.List;
 
 public class InscriptCheck {
 
@@ -16,7 +15,6 @@ public class InscriptCheck {
     private String phone;
     private String emergencyContact;
     private String address;
-    private List<String> errorList;
 
 
     public int getId_diabetic() {
@@ -107,31 +105,8 @@ public class InscriptCheck {
         this.address = address;
     }
 
-    public List<String> getErrorList() {
-        return errorList;
-    }
 
-    public void setErrorList(List<String> errorList) {
-        this.errorList = errorList;
-    }
-/*
-    public InscriptCheck(int id_diabetic, int id_doctor, String name,
-                         String firstname, Date birthdate, String mail,
-                         String password, String password2, String phone,
-                         String emergencyContact, String address, List<String> errorList) {
-        this.id_diabetic = id_diabetic;
-        this.id_doctor = id_doctor;
-        this.name = name;
-        this.firstname = firstname;
-        this.birthdate = birthdate;
-        this.mail = mail;
-        this.password = password;
-        this.password2 = password2;
-        this.phone = phone;
-        this.emergencyContact = emergencyContact;
-        this.address = address;
-        this.errorList = errorList;
-    }*/
+
 
     @Override
     public String toString() {
@@ -147,85 +122,6 @@ public class InscriptCheck {
                 ", phone='" + phone + '\'' +
                 ", emergencyContact='" + emergencyContact + '\'' +
                 ", address='" + address + '\'' +
-                ", errorList=" + errorList +
                 '}';
-    }
-
-    public void checkAll()
-    {
-        if(!this.password.equals(this.password2))
-        {
-            this.errorList.add("you haven't used the same password twice");
-        }
-        int passwordLength=8, upChars=0, lowChars=0;
-        int special=0, digits=0;
-        char ch;
-        String password = this.password;
-
-        int total = password.length();
-        if(total<passwordLength)
-        {
-            this.errorList.add("The Password's Length has to be of 8 characters or more.");
-
-        }
-        else
-        {
-            for(int i=0; i<total; i++)
-            {
-                ch = password.charAt(i);
-                if(Character.isUpperCase(ch))
-                    upChars++;
-                else if(Character.isLowerCase(ch))
-                    lowChars++;
-                else if(Character.isDigit(ch))
-                    digits++;
-                else
-                {
-                    if(ch=='<' || ch=='>')
-                    {
-                        this.errorList.add("The Password is Malicious!");
-                    }
-                    else
-                        special++;
-                }
-            }
-        }
-        if(upChars!=0 && lowChars!=0 && digits!=0 && special!=0)
-        {
-            if(total>=12)
-            {
-                System.out.println("\nThe Strength of Password is Strong.");
-            }
-            else
-            {
-                System.out.println("\nThe Strength of Password is Medium.");
-            }
-            System.out.println("\n----The Password Contains----");
-            System.out.println("UpperCase Character: " +upChars);
-            System.out.println("LowerCase Character: " +lowChars);
-            System.out.println("Digit: " +digits);
-            System.out.println("Special Character: " +special);
-        }
-        else
-        {
-            if(upChars==0)
-            {
-                this.errorList.add("The Password must contain at least one uppercase character.");
-            }
-
-            if(lowChars==0)
-            {
-                this.errorList.add("The Password must contain at least one lowercase character.");
-            }
-            if(digits==0)
-            {
-                this.errorList.add("The Password must contain at least one digit.");
-            }
-            if(special==0)
-            {
-                this.errorList.add("The Password must contain at least one special character.");
-            }
-        }
-
     }
 }

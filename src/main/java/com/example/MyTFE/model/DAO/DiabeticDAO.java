@@ -49,19 +49,6 @@ public class DiabeticDAO {
 
     public List<Diabetic> getAllDiab(){
         return jdbcTemplate.query("SELECT * FROM Diabetic",new DiabeticRowMapper());
-
-    }
-    public boolean loggin(String mail, String mdp)
-    {
-        List<Diabetic> listDia = this.getAllDiab();
-        for (int i = 0; i < listDia.size(); i++)
-        {
-            if((listDia.get(i).getMail().equals(mail))&&(listDia.get(i).getPassword().equals(mdp)))
-            {
-                return true;
-            }
-        }
-        return  false;
     }
 
     private final class DiabeticRowMapper implements RowMapper<Diabetic> {
