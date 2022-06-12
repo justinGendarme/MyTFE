@@ -63,6 +63,10 @@ public class MainController {
         return "firstPage";
     }
 
+    @RequestMapping(value = "/userOnly/profil", method = RequestMethod.GET)
+    public String profil() {
+        return "/userOnly/profil";
+    }
 
     @RequestMapping(value = "/userOnly/menu", method = RequestMethod.GET)
     public String menu() {
@@ -76,6 +80,13 @@ public class MainController {
     public String navbar() {
         return "userOnly/navbar";
     }
+
+    ///userOnly/addReminder
+    @RequestMapping(value = "/userOnly/addReminder", method = RequestMethod.GET)
+    public String addReminder() {
+        return "userOnly/addReminder";
+    }
+
 
 
     @GetMapping("/newInjForm")
@@ -91,13 +102,13 @@ public class MainController {
        return "userOnly/MyInjections";
     }
 
-    @GetMapping("/myDoctorProfil")
+    @GetMapping("/userOnly/myDoctorProfil")
     public String myDoctorProfil(Model model)
     {
         int id=this.getUserId();
         Doctor myDoc = docDAO.getDoctorById(id);
         model.addAttribute("myDoc",myDoc);
-        return "myDoctorProfil";
+        return "/userOnly/myDoctorProfil";
     }
     @GetMapping("/newDiab")
     public String inscriptionForm(Model model){
@@ -111,15 +122,6 @@ public class MainController {
         return "home";
     }
 
-    // Login form
-    @RequestMapping("/loginPage.html")
-    public String login() {
-        return "loginPage.html";
-    }
-    @GetMapping("/loginPage")
-    public String loginPage(){
-        return "loginPage";
-    }
 
     @GetMapping("/inscriptionForm")
     public String inscriptionForm() { return "inscriptionForm"; }

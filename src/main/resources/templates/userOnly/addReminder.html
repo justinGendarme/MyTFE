@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <div th:replace="header :: myheader"></div>
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="userOnly/navbar :: nav"></div>
+<div class="container">
+    <div class="row mt-5">
+        <h1>About this Reminder:</h1>
+    </div>
+    <div class="row mt-5">
+        <div class-sm-2></div>
+        <div class-sm-8>
+            <form>
+                <label for="injDate">Date:</label>
+                <input id="injDate" class="form-control" type="date" name="date" /><br>
+                Doctor (if concerned):
+                <select class="form-select" aria-label="Default select example" >
+                    <div th:each="doc: ${listDoc}">
+                        <option th:text="${doc.name}" value="${doc.id_doctor}"></option>
+                    </div>
+                    <option value=0>none</option>
+                </select><br>
+                <label for="comment">About this Reminder:</label>
+                <textarea class="form-control" rows="5" id="comment" name="comment"></textarea>
+                <br>
+
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+        <div class-sm-2></div>
+    </div>
+</div>
+
+</body>
+</html>

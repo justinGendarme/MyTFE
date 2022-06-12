@@ -1,14 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <style>
-    body {
-     background-image: url('images/Blue.png');
-     background-repeat: no-repeat;
-     background-attachment: fixed;
-     background-position: center;
-    }
-    </style>
+
     <div th:replace="header :: myheader"></div>
 
     <title>Title</title>
@@ -17,7 +10,7 @@
 <div class="container d-flex flex-column min-vh-100 justify-content-center align-items-center">
     <div class="row">
             <a th:href="@{/newDiab}" class="btn btn-primary my-2 btn-block">Inscription</a></br>
-            <a th:href="@{/userOnly/menu}" class="btn btn-primary my-2 btn-block">Authentification</a></br>
+            <a th:href="@{/userOnly/menu}" class="btn btn-primary my-2 btn-block">Authentication</a></br>
             <a th:href="@{/help}" class="btn btn-primary my-2 btn-block">Help</a></br>
     </div>
 </div>
