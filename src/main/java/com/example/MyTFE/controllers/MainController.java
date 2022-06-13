@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -64,10 +65,6 @@ public class MainController {
         return "firstPage";
     }
 
-    @RequestMapping(value = "/userOnly/profil", method = RequestMethod.GET)
-    public String profil() {
-        return "userOnly/profil";
-    }
 
     @RequestMapping(value = "/userOnly/menu", method = RequestMethod.GET)
     public String menu() {
@@ -89,7 +86,6 @@ public class MainController {
     }
 
 
-
     @GetMapping("/userOnly/newInjForm")
     public String newInjForm(){
        return "userOnly/newInjForm";
@@ -103,6 +99,7 @@ public class MainController {
        return "userOnly/MyInjections";
     }
 
+
     @GetMapping("/userOnly/myDoctorProfil")
     public String myDoctorProfil(Model model)
     {
@@ -110,6 +107,15 @@ public class MainController {
         Doctor myDoc = docDAO.getDoctorById(id);
         model.addAttribute("myDoc",myDoc);
         return "userOnly/myDoctorProfil";
+    }
+
+    @GetMapping("/userOnly/profil")
+    public String myProfil(Model model)
+    {
+        int id=this.getUserId();
+        Diabetic dia = diaDao.getDiabById(id);
+        model.addAttribute("myself",dia);
+        return "userOnly/profil";
     }
 
     @GetMapping("/userOnly/home")
@@ -145,14 +151,16 @@ public class MainController {
         return "help";
     }
 
-    @RequestMapping(value="/delInj", method= RequestMethod.POST)
-    public ModelAndView delinject(Injection injection){
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("userOnly/MyInjections");
+    @GetMapping(value="/delInj/{idIj}")
+    public String delinject(@PathVariable int idIj){
+        System.out.println(idIj);
+        injDAO.delInj(idIj);
 
-        return mv;
+        return "redirect:/userOnly/MyInjections";
 
     }
+
+
 
     @RequestMapping(value="/addInjection", method= RequestMethod.POST)
     public ModelAndView addInj(InjForm injForm){
@@ -162,7 +170,7 @@ public class MainController {
         injection.setDay(injForm.getDay());
         injection.setComment(injForm.getComment());
         int id=this.getUserId();
-        injection.setId_diabetic(id);//MOD:
+        injection.setId_diabetic(id);
 
 
         //Test
@@ -205,7 +213,7 @@ public class MainController {
         if(injDAO.checkInjExist(listInj,injection.getDate()))
         {
             System.out.println("Injection exist");
-            injDAO.editInj(injection,1);
+            injDAO.editInj(injection,1);//MOD
             mv.setViewName("userOnly/MyInjections");
             return mv;
 

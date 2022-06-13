@@ -1,10 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8">
+    <div th:replace="header :: myheader"></div>
     <title>Title</title>
 </head>
 <body>
+<div th:replace="userOnly/navbar :: nav"></div>
+<div class="container">
+    <div class="row mt-5 mb-3" >
+        <div class="col-sm-2" ></div>
+        <div class="col-sm-8" >
+            My profile:
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+
+
+    <div th:each="me: ${myself}" class="row mt-2">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+
+            Firstname:<div th:text="${me.firstname}" ></div>
+            </br>
+            Name:<div th:text="${me.name}" ></div>
+            </br>
+            Phone number:<div th:text="${me.phone}" ></div>
+            </br>
+            Emergency contact:<div th:text="${me.emergencyContact}" ></div>
+            </br>
+            E-mail:<div th:text="${me.mail}" ></div>
+            </br>
+            Address:<div th:text="${me.address}" ></div>
+            </br>
+            <a th:href="@{/inscriptionForm}" class="btn btn-success my-2 btn-block">Edit my informations</a></br>
+            <a th:href="@{/inscriptionForm}" class="btn btn-danger my-2 btn-block">Delete my account</a>
+
+
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+
+</div>
 
 </body>
 </html>
+
+<!--
+        Name:
+        Firstname:
+        Date of birth:
+        Phone:
+        Emergency contact:
+        Address:-->

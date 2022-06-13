@@ -1,9 +1,9 @@
 package com.example.MyTFE.model.bean;
 
 import java.sql.Date;
-
 public class InjForm {
 
+    private int id_injection;
     private Date date;
     private String day;
     private String testTime;
@@ -11,6 +11,14 @@ public class InjForm {
     private String doseTime;
     private String doseVal;
     private String comment;
+
+    public int getId_injection() {
+        return id_injection;
+    }
+
+    public void setId_injection(int id_injection) {
+        this.id_injection = id_injection;
+    }
 
     public Date getDate() {
         return date;
@@ -71,12 +79,13 @@ public class InjForm {
     @Override
     public String toString() {
         return "InjForm{" +
-                "date=" + date +
+                "id_injection=" + id_injection +
+                ", date=" + date +
                 ", day='" + day + '\'' +
                 ", testTime='" + testTime + '\'' +
                 ", testVal=" + testVal +
                 ", doseTime='" + doseTime + '\'' +
-                ", doseVal=" + doseVal +
+                ", doseVal='" + doseVal + '\'' +
                 ", comment='" + comment + '\'' +
                 '}';
     }
