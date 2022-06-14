@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <div th:replace="header :: myheader"></div>
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="userOnly/navbar :: nav"></div>
+<div>
+    <div class="container-fluid">
+        </br>
+        <div th:each="hlp: ${listHelp}">
+            </br>
+            <div class="row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-8" th:utext="${hlp.question}"></div><!--Questions-->
+                <div class="col-sm-2"></div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-7" th:utext="${hlp.reply}"></div><!--Reply-->
+                <div class="col-sm-2"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

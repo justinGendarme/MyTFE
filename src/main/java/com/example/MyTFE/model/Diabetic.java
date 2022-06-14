@@ -33,6 +33,7 @@ public class Diabetic {
         this.address = address;
     }
 
+
     public int getId_diabetic() {
         return id_diabetic;
     }

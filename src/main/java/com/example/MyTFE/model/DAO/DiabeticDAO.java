@@ -37,11 +37,17 @@ public class DiabeticDAO {
                     dia.getId_doctor(),dia.getName(),dia.getFirstname(),dia.getBirthdate(),dia.getMail(),dia.getPassword(),
                     dia.getPhone(),dia.getEmergencyContact(),dia.getAddress());
     }
+    public void addDiaAuth(Diabetic dia)
+    {
+        String sql="INSERT INTO authorities (mail,authority) VALUES(?,?)";
+        jdbcTemplate.update(sql,dia.getMail(),"ROLE_USER");
+    }
 
 
     public Diabetic getDiabById(int id){
         return jdbcTemplate.queryForObject("select * from Diabetic where id_diabetic=?", new DiabeticRowMapper(),id);
     }
+
 
     public Diabetic getDiaByMail(String ml){
         return jdbcTemplate.queryForObject("select * from Diabetic where mail=?", new DiabeticRowMapper(),ml);

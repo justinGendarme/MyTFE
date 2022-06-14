@@ -50,12 +50,12 @@ public class MainController {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
             String username = ((UserDetails)principal).getUsername();
-            Diabetic diabetic=diaDao.getDiaByMail(username);
+            Diabetic diabetic = diaDao.getDiaByMail(username);
             id=diabetic.getId_diabetic();
             return id;
         } else {
             String username = principal.toString();
-            Diabetic diabetic=diaDao.getDiaByMail(username);
+            Diabetic diabetic = diaDao.getDiaByMail(username);
             id=diabetic.getId_diabetic();
             return id;
         }
@@ -65,11 +65,6 @@ public class MainController {
         return "firstPage";
     }
 
-
-    @RequestMapping(value = "/userOnly/menu", method = RequestMethod.GET)
-    public String menu() {
-        return "userOnly/menu";
-    }
     @RequestMapping(value = "/userOnly/newDocForm", method = RequestMethod.GET)
     public String newDocForm() {
         return "userOnly/newDocForm";
@@ -79,7 +74,6 @@ public class MainController {
         return "userOnly/navbar";
     }
 
-    ///userOnly/addReminder
     @RequestMapping(value = "/userOnly/addReminder", method = RequestMethod.GET)
     public String addReminder() {
         return "userOnly/addReminder";
@@ -104,7 +98,8 @@ public class MainController {
     public String myDoctorProfil(Model model)
     {
         int id=this.getUserId();
-        Doctor myDoc = docDAO.getDoctorById(id);
+        Diabetic diabetic = diaDao.getDiabById(id);
+        Doctor myDoc = docDAO.getDoctorById(diabetic.getId_doctor());
         model.addAttribute("myDoc",myDoc);
         return "userOnly/myDoctorProfil";
     }
@@ -149,6 +144,12 @@ public class MainController {
         List<Help> listHelp = helpDAO.getAllHelp();
         model.addAttribute("listHelp",listHelp);
         return "help";
+    }
+    @GetMapping("/userOnly/helpUser")
+    public String helpUserPage(Model model){
+        List<Help> listHelp = helpDAO.getAllHelp();
+        model.addAttribute("listHelp",listHelp);
+        return "userOnly/helpUser";
     }
 
     @GetMapping(value="/delInj/{idIj}")
@@ -202,19 +203,15 @@ public class MainController {
 
 
         //verifier si l'injection n'existe pas deja
-        List<Injection> listInj = injDAO.getAllInjFromIdDia(1);//MOD:
-        System.out.println("Contenu de la liste d'injection du diabetic 1:");
-        System.out.println(listInj.toString());
-        System.out.println("injection from form:");
-        System.out.println(injection.toString());
-        System.out.println("--------------");
+        List<Injection> listInj = injDAO.getAllInjFromIdDia(id);
+
 
 
         if(injDAO.checkInjExist(listInj,injection.getDate()))
         {
             System.out.println("Injection exist");
-            injDAO.editInj(injection,1);//MOD
-            mv.setViewName("userOnly/MyInjections");
+            injDAO.editInj(injection,id);
+            mv.setViewName("redirect:/userOnly/MyInjections");
             return mv;
 
         }
@@ -222,7 +219,7 @@ public class MainController {
         {
             System.out.println("Injection exist pas");
             injDAO.addInj(injection);
-            mv.setViewName("userOnly/MyInjections");
+            mv.setViewName("redirect:/userOnly/MyInjections");
             return mv;
         }
 
@@ -230,11 +227,12 @@ public class MainController {
 
 
 
-    @RequestMapping(value="/inscription", method= RequestMethod.POST)
+    @RequestMapping(value = "/inscription", method = RequestMethod.POST)
     public ModelAndView ins(InscriptCheck inscriptCheck) {
+
         System.out.println("TTEESSTT");//ok
         System.out.println(inscriptCheck.toString());//ok
-        ModelAndView mv = new ModelAndView();
+        ModelAndView mv = new ModelAndView(firstPage());
         List lst = new LinkedList();
         Diabetic newDia = new Diabetic();
         //TEST Password SECURITY
@@ -245,7 +243,7 @@ public class MainController {
         int total=psw.length();
         if(total<passLenght)
         {
-            lst.add("Password lenght must be beetween 8 and 16");
+            lst.add("Password lenght must be between 8 and 16");
         }
         else
         {
@@ -265,52 +263,49 @@ public class MainController {
         if(upChars != 1 && lowChars != 1 && digits!=1 && special!=1)
             lst.add("This password isn't strong enough");
 
-        if(inscriptCheck.getPassword().equals(inscriptCheck.getPassword2()))
-        {
-            if((inscriptCheck.getFirstname()).equals(""))
-            {
-                lst.add("Firstname is missing");
-            }
-            if((inscriptCheck.getName()).equals(""))
-            {
-                lst.add("Lastname is missing");
-            }
-
-            if(inscriptCheck.getMail().equals(""))
-            {
-                lst.add("mail address is missing");
-            }
-
-            if(inscriptCheck.getPassword().equals("")) {
-                lst.add("first password is missing");
-            }
-
-            if(inscriptCheck.getPassword2().equals(""))
-            {
-                lst.add("second password is missing");
-            }
-
-            if(inscriptCheck.getBirthdate().equals(null))
-            {
-                lst.add("date of birth is missing");
-            }
-            if(inscriptCheck.getPhone().equals(""))
-            {
-                lst.add("phone number is missing");
-            }
-            if(inscriptCheck.getEmergencyContact().equals(""))
-            {
-                lst.add("emergency contact is missing");
-            }
-            if(inscriptCheck.getAddress().equals(""))
-            {
-                lst.add("address is missing"+ "\n");
-            }
-        }
-        else{
-            System.out.println("pas ok");
+        if(!inscriptCheck.getPassword().equals(inscriptCheck.getPassword2()))
             lst.add("The first and second password are not the same"+ "\n");
+
+        if((inscriptCheck.getFirstname()).equals(""))
+        {
+            lst.add("Firstname is missing");
         }
+        if((inscriptCheck.getName()).equals(""))
+        {
+            lst.add("Lastname is missing");
+        }
+
+        if(inscriptCheck.getMail().equals(""))
+        {
+            lst.add("mail address is missing");
+        }
+
+        if(inscriptCheck.getPassword().equals("")) {
+            lst.add("first password is missing");
+        }
+
+        if(inscriptCheck.getPassword2().equals(""))
+        {
+            lst.add("second password is missing");
+        }
+
+        if(inscriptCheck.getBirthdate().equals(null))
+        {
+            lst.add("date of birth is missing");
+        }
+        if(inscriptCheck.getPhone().equals(""))
+        {
+            lst.add("phone number is missing");
+        }
+        if(inscriptCheck.getEmergencyContact().equals(""))
+        {
+            lst.add("emergency contact is missing");
+        }
+        if(inscriptCheck.getAddress().equals(""))
+        {
+            lst.add("address is missing"+ "\n");
+        }
+
 
         if(!lst.isEmpty())
         {
@@ -318,8 +313,17 @@ public class MainController {
             mv.addObject("er",lst);
             return mv;
         }
+        else{
 
-        mv.setViewName(menu());
+            Diabetic di = new Diabetic(0,1,inscriptCheck.getName(), inscriptCheck.getFirstname(),
+                    inscriptCheck.getBirthdate(), inscriptCheck.getMail(), inscriptCheck.getPassword(),
+                    inscriptCheck.getPhone(), inscriptCheck.getEmergencyContact(), inscriptCheck.getAddress());
+            diaDao.addDiab(di);
+            diaDao.addDiaAuth(di);
+
+        }
+
+
         return mv;
     }
 

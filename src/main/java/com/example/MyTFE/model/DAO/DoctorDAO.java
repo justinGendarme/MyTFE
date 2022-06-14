@@ -24,6 +24,7 @@ public class DoctorDAO {
         return jdbcTemplate.queryForObject("SELECT * FROM Doctor WHERE id_doctor=?", new DoctorDAO.DoctorRowMapper(),id);
     }
 
+
     private final class DoctorRowMapper implements RowMapper<Doctor> {
         @Override
         public Doctor mapRow(ResultSet rs, int rowNum) throws SQLException {
