@@ -8,8 +8,8 @@
 <body>
 <div th:replace="userOnly/navbar :: nav"></div>
 <div class="container d-flex flex-column min-vh-100 justify-content-center align-items-center">
-    <div class="row mt-5 mb-3" >
-        <h3>My injections</h3>
+    <div class="row mt-5 mb-3 p-3" style="background-color:aliceblue;">
+        <h5>My injections</h5>
 
             <table class="table table-striped">
                 <thead>
@@ -51,16 +51,22 @@
                     <td th:text="${Inj.comment}"></td>
                     <td>
                         <a th:href="@{/delInj/{idIj}(idIj=${Inj.id_injection})}">Delete</a>
-                        <!--<form th:action="@{/inj/doDelete}" th:object="${InjForm}" method="post">
-                            <input type="hidden" th:field="${InjForm.id_injection}"/>
-                            <button type="submit">Delete</button>
-                        </form>-->
+
                     </td>
 
                 </tr>
                 </tbody>
             </table>
 
+    </div>
+
+    <div class="row p-3" style="background-color:aliceblue;" >
+        <div class="col-sm-12">
+            <h5>My periodic review:</h5>
+            <div th:each="rv: ${myRev}">
+                <a th:href="@{/seeRv/{idRv}(idRv=${rv.id_review})}"><div th:text="${rv.date}">  </div></a>
+            </div>
+        </div>
     </div>
 
 </div>

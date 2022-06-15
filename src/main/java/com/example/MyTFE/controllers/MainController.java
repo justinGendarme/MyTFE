@@ -1,10 +1,7 @@
 package com.example.MyTFE.controllers;
 
+import com.example.MyTFE.model.*;
 import com.example.MyTFE.model.DAO.*;
-import com.example.MyTFE.model.Diabetic;
-import com.example.MyTFE.model.Doctor;
-import com.example.MyTFE.model.Help;
-import com.example.MyTFE.model.Injection;
 import com.example.MyTFE.model.bean.InjForm;
 import com.example.MyTFE.model.bean.InscriptCheck;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +40,9 @@ public class MainController {
     @Autowired
     ReminderDAO remDAO;
 
+    @Autowired
+    Periodic_reviewDAO revDAO;
+
 
     public int getUserId(){
         int id=0;
@@ -60,7 +60,7 @@ public class MainController {
             return id;
         }
     }
-   @GetMapping("/")
+    @GetMapping("/")
     public String firstPage(){
         return "firstPage";
     }
@@ -72,6 +72,14 @@ public class MainController {
     @RequestMapping(value = "/userOnly/navbar", method = RequestMethod.GET)
     public String navbar() {
         return "userOnly/navbar";
+    }
+
+
+
+
+    @RequestMapping(value = "/userOnly/newReview", method = RequestMethod.GET)
+    public String newReview() {
+        return "userOnly/newReview";
     }
 
     @RequestMapping(value = "/userOnly/addReminder", method = RequestMethod.GET)
@@ -90,6 +98,8 @@ public class MainController {
         int id=this.getUserId();
         List <Injection> myInj = injDAO.getAllInjFromIdDia(id);
         model.addAttribute("myInj",myInj);
+        List <Periodic_review> myRev = revDAO.getAllRevFromId(id);
+        model.addAttribute("myRev",myRev);
        return "userOnly/MyInjections";
     }
 
@@ -161,6 +171,17 @@ public class MainController {
 
     }
 
+    @GetMapping(value="/seeRv/{rvDt}")
+    public ModelAndView seeRv(@PathVariable int idRv){
+        System.out.println(idRv);
+        Periodic_review pr = revDAO.getRevById(idRv);
+        ModelAndView mv = new ModelAndView("/userOnly/review");//MOD AJOUTER LA PAGE AFFICHAGE RV
+        mv.addObject("pr",pr);
+
+        return mv;
+
+    }
+
 
 
     @RequestMapping(value="/addInjection", method= RequestMethod.POST)
@@ -225,6 +246,18 @@ public class MainController {
 
     }
 
+    @RequestMapping(value="/addRev", method = RequestMethod.POST)
+    public ModelAndView addRv(Periodic_review periodicReview)
+    {
+        System.out.println(periodicReview.toString());
+        int id=this.getUserId();
+        periodicReview.setId_diabetic(id);
+        Diabetic di=diaDao.getDiabById(id);
+        periodicReview.setId_doctor(di.getId_doctor());
+        revDAO.addReview(periodicReview);
+        ModelAndView mv = new ModelAndView("userOnly/home");
+        return mv;
+    }
 
 
     @RequestMapping(value = "/inscription", method = RequestMethod.POST)

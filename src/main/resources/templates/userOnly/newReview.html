@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <div th:replace="header :: myheader"></div>
+    <title>My Injections</title>
+</head>
+<body>
+<div th:replace="userOnly/navbar :: nav"></div>
+<div class="container">
+    <div class="row mt-5 p-3" style="background-color:aliceblue;" >
+        <div class="col-sm-12" style="text-align:center;"><h3>Periodic review:</h3></div>
+    </div>
+
+    <form th:action="@{/addRev}" method="post">
+
+    <div class="row p-3" style="background-color:aliceblue;" >
+
+        <div class="col-sm-2" ><h5>Examination date:</h5></div>
+        <div class="col-sm-2"><input  class="form-control" type="date" name="date" /></div>
+        <div class="col-sm-3"></div>
+        <div class="col-sm-2"><h5>Month of next check-up</h5></div>
+        <div class="col-sm-2"><input type="text"  name="nexmonth"></div>
+        <div class="col-sm-1" ></div>
+
+    </div>
+    <div class="row p-3" style="background-color:aliceblue;" >
+        <div class="col-sm-12">
+            <label for="weight">Weight:</label><br>
+            <input type="text" id="weight" name="weight" placeholder="(Kg)"><br>
+            <label for="arterialPressure">Arterial Pressure:</label><br>
+            <input type="text" id="arterialPressure" name="arterialPressure" placeholder="(mm of Hg)"><br>
+        </div>
+    </div>
+    <div class="row p-3" style="background-color:aliceblue;" >
+        <div class="col-sm-12">
+
+
+            <h5>Blood and urine test:</h5>
+            <label for="cholesterol">Cholesterol:</label><br>
+            <input type="text" id="cholesterol" name="cholesterol" placeholder="(mg/dl)"><br>
+
+            <label for="hdlcholesterol">HDL Cholesterol:</label><br>
+            <input type="text" id="hdlcholesterol" name="hdlcholesterol" placeholder="(mg/dl)"><br>
+
+            <label for="triglycerides">Triglycerides:</label><br>
+            <input type="text" id="triglycerides" name="triglycerides" placeholder="(mg/dl)"></br>
+
+            <label for="urea">Urea:</label><br>
+            <input type="text" id="urea" name="urea" placeholder="(mg/dl)"></br>
+
+            <label for="creatinine">Creatinine:</label><br>
+            <input type="text" id="creatinine" name="creatinine" placeholder="(mg/dl)"></br>
+
+            <label for="glycatedHemoglobin">Glycated Hemoglobin:</label><br>
+            <input type="text" id="glycatedHemoglobin" name="glycatedHemoglobin" placeholder="(% - mmol/mol)"></br>
+
+            <label for="proteinuria">Proteinuria:</label><br>
+            <input type="text" id="proteinuria" name="proteinuria" placeholder="(mg/dl)"></br>
+
+            <label for="microalbuminuria">Microalbuminuria:</label><br>
+            <input type="text" id="microalbuminuria" name="microalbuminuria" placeholder="(mg/l)"></br>
+            </br>
+            <h3>Fundus examination and fluoangiography:</h3>
+            <textarea class="form-control" rows="5" id="eyeFluoangiography" name="eyeFluoangiography"></textarea>
+            </br>
+            </br>
+
+            <h3>Other:</h3>
+
+            <textarea class="form-control" rows="5" id="other" name="other"></textarea>
+            </br>
+            <input type="submit" value="Submit">
+        </div>
+    </div>
+        </form>
+</div>
+</body>
+</html>

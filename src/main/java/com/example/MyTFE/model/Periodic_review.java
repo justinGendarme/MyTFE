@@ -8,6 +8,8 @@ public class Periodic_review {
     private int id_diabetic;
     private int id_doctor;
     private Date date;
+
+    private String nexmonth;
     private float weight;
     private float arterialPressure;
     private float cholesterol;
@@ -18,30 +20,8 @@ public class Periodic_review {
     private float glycatedHemoglobin;
     private float proteinuria;
     private float microalbuminuria;
-    private String eyeFluangiography;
+    private String eyeFluoangiography;
     private String other;
-
-    public Periodic_review() {
-    }
-
-    public Periodic_review(int id_review, int id_diabetic, int id_doctor, Date date, float weight, float arterialPressure, float cholesterol, float hdlcholesterol, float triglycerides, float urea, float creatinine, float glycatedHemoglobin, float proteinuria, float microalbuminuria, String eyeFluangiography, String other) {
-        this.id_review = id_review;
-        this.id_diabetic = id_diabetic;
-        this.id_doctor = id_doctor;
-        this.date = date;
-        this.weight = weight;
-        this.arterialPressure = arterialPressure;
-        this.cholesterol = cholesterol;
-        this.hdlcholesterol = hdlcholesterol;
-        this.triglycerides = triglycerides;
-        this.urea = urea;
-        this.creatinine = creatinine;
-        this.glycatedHemoglobin = glycatedHemoglobin;
-        this.proteinuria = proteinuria;
-        this.microalbuminuria = microalbuminuria;
-        this.eyeFluangiography = eyeFluangiography;
-        this.other = other;
-    }
 
     public int getId_review() {
         return id_review;
@@ -73,6 +53,14 @@ public class Periodic_review {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getNexmonth() {
+        return nexmonth;
+    }
+
+    public void setNexmonth(String nexmonth) {
+        this.nexmonth = nexmonth;
     }
 
     public float getWeight() {
@@ -155,12 +143,12 @@ public class Periodic_review {
         this.microalbuminuria = microalbuminuria;
     }
 
-    public String getEyeFluangiography() {
-        return eyeFluangiography;
+    public String getEyeFluoangiography() {
+        return eyeFluoangiography;
     }
 
-    public void setEyeFluangiography(String eyeFluangiography) {
-        this.eyeFluangiography = eyeFluangiography;
+    public void setEyeFluoangiography(String eyeFluoangiography) {
+        this.eyeFluoangiography = eyeFluoangiography;
     }
 
     public String getOther() {
@@ -170,4 +158,55 @@ public class Periodic_review {
     public void setOther(String other) {
         this.other = other;
     }
+
+    public Periodic_review(int id_review, int id_diabetic, int id_doctor, Date date, String nexmonth,
+                           float weight, float arterialPressure, float cholesterol, float hdlcholesterol,
+                           float triglycerides, float urea, float creatinine, float glycatedHemoglobin,
+                           float proteinuria, float microalbuminuria, String eyeFluoangiography
+            , String other) {
+        this.id_review = id_review;
+        this.id_diabetic = id_diabetic;
+        this.id_doctor = id_doctor;
+        this.date = date;
+        this.nexmonth = nexmonth;
+        this.weight = weight;
+        this.arterialPressure = arterialPressure;
+        this.cholesterol = cholesterol;
+        this.hdlcholesterol = hdlcholesterol;
+        this.triglycerides = triglycerides;
+        this.urea = urea;
+        this.creatinine = creatinine;
+        this.glycatedHemoglobin = glycatedHemoglobin;
+        this.proteinuria = proteinuria;
+        this.microalbuminuria = microalbuminuria;
+        this.eyeFluoangiography = eyeFluoangiography;
+        this.other = other;
+    }
+
+    public Periodic_review() {
+    }
+
+    @Override
+    public String toString() {
+        return "Periodic_review{" +
+                "id_review=" + id_review +
+                ", id_diabetic=" + id_diabetic +
+                ", id_doctor=" + id_doctor +
+                ", date=" + date +
+                ", nexmonth='" + nexmonth + '\'' +
+                ", weight=" + weight +
+                ", arterialPressure=" + arterialPressure +
+                ", cholesterol=" + cholesterol +
+                ", hdlcholesterol=" + hdlcholesterol +
+                ", triglycerides=" + triglycerides +
+                ", urea=" + urea +
+                ", creatinine=" + creatinine +
+                ", glycatedHemoglobin=" + glycatedHemoglobin +
+                ", proteinuria=" + proteinuria +
+                ", microalbuminuria=" + microalbuminuria +
+                ", eyeFluoangiography='" + eyeFluoangiography + '\'' +
+                ", other='" + other + '\'' +
+                '}';
+    }
 }
+
