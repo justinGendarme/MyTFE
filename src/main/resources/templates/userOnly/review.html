@@ -5,6 +5,7 @@
   <title>My Injections</title>
 </head>
 <body>
+
 <div th:replace="userOnly/navbar :: nav"></div>
 <div class="container" th:each="p: ${pr}">
   <div class="row mt-5 p-3" style="background-color:aliceblue;" >
@@ -24,47 +25,49 @@
         Weight:</br>
         <div th:text="${p.weight}"></div><br>
         Arterial Pressure:<br>
-        <div th:text="${p.arterialPressure}"></div><br>
+        <div th:text="${p.arterialPressure}"></div></br>
       </div>
     </div>
+
     <div class="row p-3" style="background-color:aliceblue;" >
       <div class="col-sm-12">
 
 
         <h5>Blood and urine test:</h5>
-        <label for="cholesterol">Cholesterol:</label><br>
-        <input type="text" id="cholesterol" name="cholesterol" placeholder="(mg/dl)"><br>
+        Cholesterol:</br>
+        <div th:text="${p.cholesterol}+' mg/dl'"></div><br>
 
-        <label for="hdlcholesterol">HDL Cholesterol:</label><br>
-        <input type="text" id="hdlcholesterol" name="hdlcholesterol" placeholder="(mg/dl)"><br>
+        HDL Cholesterol:<br>
+        <div th:text="${p.hdlcholesterol}+' mg/dl'"></div><br>
 
-        <label for="triglycerides">Triglycerides:</label><br>
-        <input type="text" id="triglycerides" name="triglycerides" placeholder="(mg/dl)"></br>
+        Triglycerides:<br>
+        <div th:text="${p.triglycerides}+' mg/dl'"></div><br>
 
-        <label for="urea">Urea:</label><br>
-        <input type="text" id="urea" name="urea" placeholder="(mg/dl)"></br>
+        Urea:<br>
+        <div th:text="${p.urea}+' mg/dl'"></div><br>
 
-        <label for="creatinine">Creatinine:</label><br>
-        <input type="text" id="creatinine" name="creatinine" placeholder="(mg/dl)"></br>
+        Creatinine:<br>
+        <div th:text="${p.creatinine}+' mg/dl'"></div><br>
 
-        <label for="glycatedHemoglobin">Glycated Hemoglobin:</label><br>
-        <input type="text" id="glycatedHemoglobin" name="glycatedHemoglobin" placeholder="(% - mmol/mol)"></br>
+        Glycated Hemoglobin:<br>
+        <div th:text="${p.glycatedHemoglobin}+' % - mmol/mol'"></div><br>
 
-        <label for="proteinuria">Proteinuria:</label><br>
-        <input type="text" id="proteinuria" name="proteinuria" placeholder="(mg/dl)"></br>
+        Proteinuria:<br>
+        <div th:text="${p.proteinuria}+' mg/dl'"></div><br>
 
-        <label for="microalbuminuria">Microalbuminuria:</label><br>
-        <input type="text" id="microalbuminuria" name="microalbuminuria" placeholder="(mg/l)"></br>
-        </br>
+        Microalbuminuria:<br>
+        <div th:text="${p.microalbuminuria}+' mg/dl'"></div><br>
+
+        <br>
         <h3>Fundus examination and fluoangiography:</h3>
-        <textarea class="form-control" rows="5" id="eyeFluoangiography" name="eyeFluoangiography"></textarea>
-        </br>
-        </br>
+        <div th:text="${p.eyeFluoangiography}"></div><br>
+        <br>
+        <br>
 
         <h3>Other:</h3>
+        <div th:text="${p.other}"></div><br>
 
-        <textarea class="form-control" rows="5" id="other" name="other"></textarea>
-        </br>
+        <br>
       </div>
     </div>
   </form>

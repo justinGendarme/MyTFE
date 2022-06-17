@@ -13,7 +13,7 @@
     <div class="row mt-5">
         <div class-sm-2></div>
         <div class-sm-8>
-            <form th:action="@{/addRem}"   method="post">
+            <form th:action="@{/addRm}"   method="post">
                 <label for="injDate">Date:</label>
                 <input id="injDate" class="form-control" type="date" name="date" /><br>
                 Doctor (if concerned):
@@ -21,10 +21,10 @@
                     <div th:each="doc: ${listDoc}">
                         <option th:text="${doc.name}" value="${doc.id_doctor}"></option>
                     </div>
-                    <option value=0>none</option>
+                    <option value="0">none</option>
                 </select><br>
-                <label for="comment">About this Reminder:</label>
-                <textarea class="form-control" rows="5" id="comment" name="comment"></textarea>
+                <label for="description">About this Reminder:</label>
+                <textarea class="form-control" rows="5" id="description" name="description"></textarea>
                 <br>
 
                 <input type="submit" value="Submit">

@@ -132,7 +132,7 @@ public class MainController {
 
         //datej = 7 day before
         ZoneId defaultZoneId = ZoneId.systemDefault();
-        LocalDate localDate = LocalDate.now().minusDays(7);
+        LocalDate localDate = LocalDate.now().plusDays(7);
         java.util.Date datej = Date.from(localDate.atStartOfDay(defaultZoneId).toInstant());
 
 
@@ -171,17 +171,39 @@ public class MainController {
 
     }
 
-    @GetMapping(value="/seeRv/{rvDt}")
-    public ModelAndView seeRv(@PathVariable int idRv){
+    @GetMapping(value="/seeRv/{idRv}")
+    public  String affRv(@PathVariable int idRv,Model model){
+        System.out.println("Test Aff");
         System.out.println(idRv);
         Periodic_review pr = revDAO.getRevById(idRv);
-        ModelAndView mv = new ModelAndView("/userOnly/review");//MOD AJOUTER LA PAGE AFFICHAGE RV
-        mv.addObject("pr",pr);
+        model.addAttribute("pr",pr);
 
-        return mv;
-
+        return "/userOnly/review";
     }
+    //public ModelAndView seeRv(@PathVariable int idRv){
+        /*System.out.println(idRv);
+        Periodic_review pr = revDAO.getRevById(idRv);
+        ModelAndView mv = new ModelAndView();//MOD AJOUTER LA PAGE AFFICHAGE RV
+        mv.addObject("pr",pr);*/
 
+        //mv.setViewName("redirect:/userOnly/review");
+
+        //return mv;
+
+   // }
+
+    @RequestMapping(value="/addRm", method= RequestMethod.POST)
+    public ModelAndView addRm(Reminder rm){
+        System.out.println(rm.toString());
+        ModelAndView mv = new ModelAndView();
+        int id=this.getUserId();
+        rm.setId_diabetic(id);
+        rm.setId_doctor(1);
+        rm.setId_reminder(0);
+        remDAO.addRem(rm);
+        mv.setViewName("redirect:/userOnly/home");
+        return mv;
+    }
 
 
     @RequestMapping(value="/addInjection", method= RequestMethod.POST)

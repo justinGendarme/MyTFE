@@ -16,10 +16,22 @@ public class ReminderDAO {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+
     public SimpleJdbcInsert simpleJdbcInsert;
+
+
 
     public List <Reminder> getAllReminderFromUser(int id){
         return jdbcTemplate.query("SELECT * FROM Reminder WHERE id_diabetic=?",new ReminderRowMapper(),id);
+    }
+
+
+    public void addRem (Reminder rem)
+    {
+        String sql="INSERT INTO reminder (id_reminder,id_doctor,id_diabetic,date,description) " +
+                "VALUES (?,?,?,?,?)";
+        jdbcTemplate.update(sql,
+                rem.getId_reminder(),rem.getId_doctor(),rem.getId_diabetic(),rem.getDate(),rem.getDescription());
     }
 
 

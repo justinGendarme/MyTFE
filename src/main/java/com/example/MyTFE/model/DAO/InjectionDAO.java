@@ -69,19 +69,19 @@ public class InjectionDAO {
             inj.setId_diabetic(rs.getInt("id_diabetic"));
             inj.setDate(rs.getDate("date"));
             inj.setDay(rs.getString("day"));
-            inj.setWakeupTest(rs.getInt("wakeupTest"));//5
+            inj.setWakeupTest(rs.getInt("wakeupTest"));
             inj.setMorningDose(rs.getString("morningDose"));
             inj.setMorningTest(rs.getInt("morningTest"));
             inj.setMiddayTest(rs.getInt("middayTest"));
             inj.setMiddayDose(rs.getString("middayDose"));
-            inj.setAfternoonTest(rs.getInt("afternoonTest"));//10
+            inj.setAfternoonTest(rs.getInt("afternoonTest"));
             inj.setSupperTest(rs.getInt("supperTest"));
             inj.setSupperDose(rs.getString("supperDose"));
             inj.setEveningTest(rs.getInt("eveningTest"));
             inj.setSleepTest(rs.getInt("sleepTest"));
-            inj.setSleepDose(rs.getString("sleepDose"));//15
+            inj.setSleepDose(rs.getString("sleepDose"));
             inj.setNightTest(rs.getInt("nightTest"));
-            inj.setComment(rs.getString("comment"));//17
+            inj.setComment(rs.getString("comment"));
             return inj;
         }
 

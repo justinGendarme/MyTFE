@@ -60,4 +60,15 @@ public class Reminder {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "Reminder{" +
+                "id_reminder=" + id_reminder +
+                ", id_doctor=" + id_doctor +
+                ", id_diabetic=" + id_diabetic +
+                ", date=" + date +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }
